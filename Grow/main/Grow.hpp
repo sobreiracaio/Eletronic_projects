@@ -30,9 +30,9 @@
 //Controls Pins
 # define BT1 A5
 # define BT2 A2
-# define ROT_SW A6
+# define ROT_SW A3
 # define ROT_DT A4
-# define ROT_CLK 10
+# define ROT_CLK A6
 
 //Output Pins
 # define PUMP 2
@@ -46,18 +46,30 @@
 
 
 
+
 class Sensors{
 
   public:
+      Sensors();
       void setTempHum(DHT11 dht11);
       void setSoilMoisture(int pin);
       int getTemp(void);
       int getHumid(void);
       int getSoil(void);
+      int getTargetTemp(void);
+      int getTargetHumid(void);
+      int getTargetSoil(void);
+
+      void setTargetTemp(int temp);
+      void setTargetHumid(int humid);
+      void setTargetSoil(int soil);
   private:
        int _temperature;
        int _humidity;
        int _soil;
+       int _targetTemp;
+       int _targetHumid;
+       int _targetSoil;
   
 };
 
@@ -65,8 +77,9 @@ class Display{
 
   public:
       void initDisplay(Adafruit_ST7735 tft);
-      void displayTopInfo(Adafruit_ST7735 tft);
-      void displayMidScreen(Adafruit_ST7735 tft);
+      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
+      void displayAdjusts2(Adafruit_ST7735 tft);
+      void displayCalibration(Adafruit_ST7735 tft);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
 
 
@@ -74,16 +87,18 @@ class Display{
 
 class Controls{
 
+
   public:
+  int buttonOne(int value);
 
 };
 
 class Actuators{
 
   public:
-    void setPumpSwitch(bool state);
-    void setLightSwitch(bool state);
-    void setFanSwitch(bool state);
+    void setPumpSwitch(int state);
+    void setLightSwitch(int state);
+    void setFanSwitch(int state);
 };
 
 
