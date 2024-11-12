@@ -21,9 +21,11 @@ int value = 0;
 
 
 
+
+
+Controls Button1(BT1);
 Sensors Sensor;
 Display Screen;
-Controls Control;
 
 
 void setup() {
@@ -41,9 +43,12 @@ void setup() {
 
   pinMode(BT1, INPUT_PULLUP);
   pinMode(BT2, INPUT_PULLUP);
-  pinMode(ROT_SW, INPUT_PULLUP);
+  pinMode(BT3, INPUT_PULLUP);
+  pinMode(BT4, INPUT_PULLUP);
   
   Screen.initDisplay(tft);
+
+
 
   
 
@@ -52,8 +57,16 @@ void setup() {
 
 void loop() 
 {
-  value = Control.buttonOne(value);
+  Button1.buttons(&value);
   
+  
+
+  
+ 
+
+
+
+
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);
   //Screen.displayAdjusts(tft, &Sensor);

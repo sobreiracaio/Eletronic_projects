@@ -23,25 +23,26 @@
 //Display Pins
 # define SCL_PIN 13
 # define SDA_PIN 11
-# define RES_PIN 5
-# define DC_PIN 7
-# define CS_PIN 6
+# define RES_PIN 8
+# define DC_PIN 9
+# define CS_PIN 10
 
 //Controls Pins
-# define BT1 A5
-# define BT2 A2
-# define ROT_SW A3
-# define ROT_DT A4
-# define ROT_CLK A6
+# define BT1 A0
+# define BT2 A5
+# define BT3 A4
+# define BT4 A3
 
 //Output Pins
 # define PUMP 2
 # define LIGHT 3
 # define FAN 4
+# define HUMIDIFIER 5
 
 # include <DHT11.h>
 # include <Adafruit_GFX.h>    
 # include <Adafruit_ST7735.h> 
+#include "Adafruit_ST77xx.h"
 # include <SPI.h>
 
 
@@ -87,9 +88,16 @@ class Display{
 
 class Controls{
 
+  private:
+    int _buttonPin;
+    int _buttonState;
+    int _lastButtonState;
+    unsigned long _lastDebounceTime;
+    unsigned long _debounceDelay;
 
   public:
-  int buttonOne(int value);
+    Controls(int buttonPin);
+    void buttons(int *value);
 
 };
 
@@ -99,6 +107,7 @@ class Actuators{
     void setPumpSwitch(int state);
     void setLightSwitch(int state);
     void setFanSwitch(int state);
+    void setHumidSwitch(int state);
 };
 
 
