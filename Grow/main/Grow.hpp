@@ -18,7 +18,7 @@
 
 //Sensor Pins
 # define DHT_PIN A1
-# define SOIL_PIN A0
+# define SOIL_PIN A2
 
 //Display Pins
 # define SCL_PIN 13
@@ -111,9 +111,9 @@ class Display{
 
   public:
       void initDisplay(Adafruit_ST7735 tft);
-      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
-      void displayAdjusts2(Adafruit_ST7735 tft);
-      void displayCalibration(Adafruit_ST7735 tft);
+      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor, int* value, Controls *buttons);
+      void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button);
+      void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int* value, Controls *buttons);
 
 

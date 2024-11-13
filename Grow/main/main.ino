@@ -17,7 +17,7 @@
 DHT11 dht11(DHT_PIN);
 Adafruit_ST7735 tft = Adafruit_ST7735(CS_PIN, DC_PIN, SDA_PIN, SCL_PIN, RES_PIN);
 
-int menu = 0;
+int menu = 3;
 
 
 
@@ -32,7 +32,7 @@ void setup() {
 
   
   
-  Serial.begin(115200);
+  //Serial.begin(115200);
 
   pinMode(DHT_PIN, INPUT);
    pinMode(SOIL_PIN, INPUT);
@@ -63,15 +63,20 @@ void loop()
   {
       case 0:
         Screen.mainDisplay(tft, &Sensor, &menu, Button);
-        
         break;
       case 1:
-        Screen.displayAdjusts(tft, &Sensor);
+        Screen.displayAdjusts(tft, &Sensor, &menu, Button);
+        break;
+      case 2:
+        Screen.displayAdjusts2(tft, &Sensor, &menu, Button);
+        break;
+      case 3:
+        Screen.displayCalibration(tft, &Sensor, &menu, Button);
         break;
       default:
         menu = 0;
   }
-  Serial.println(menu);
+  //Serial.println(menu);
   
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);

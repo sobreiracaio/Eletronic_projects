@@ -19,19 +19,11 @@
 Controls::Controls(int buttonPin)
 {
       this->_buttonPin = buttonPin;
-      this->_debounceDelay = 170;
+      this->_debounceDelay = 100;
       this->_buttonState = HIGH;
       this->_lastButtonState = HIGH;
       this->_lastDebounceTime = 0;
 }
-
-
-
-
-
-
-
-
 
 void Controls::buttons(int *value, int operation, int newValue, Adafruit_ST7735 tft, int screenState)
 {

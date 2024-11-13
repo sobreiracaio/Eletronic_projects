@@ -30,7 +30,7 @@ void Display::initDisplay(Adafruit_ST7735 tft)
  
 }
 
-void Display::displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor)
+void Display::displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
 {
     
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
@@ -51,16 +51,23 @@ void Display::displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor)
     tft.print("<-      ->");
     tft.setCursor(89, 95);
     tft.print("Prev  Next");
+    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
 }
 
-void Display::displayAdjusts2(Adafruit_ST7735 tft)
+void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
 {
-
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.setCursor(33, 26);
+    tft.print("More Adjustments");
+    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
 }
 
-void Display::displayCalibration(Adafruit_ST7735 tft)
+void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
 {
-
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.setCursor(47, 26);
+    tft.print("Calibration");
+    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
 }
 
 void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
@@ -116,6 +123,10 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int *value, Cont
 
   
   button[0].buttons(value, ASSIGMENT, 1, tft, CLEAR_SCR);
+  button[1].buttons(value, ASSIGMENT, 2, tft, CLEAR_SCR);
+  button[2].buttons(value, ASSIGMENT, 3, tft, CLEAR_SCR);
+  
+  
   
 
 }
