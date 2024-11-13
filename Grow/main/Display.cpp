@@ -63,7 +63,7 @@ void Display::displayCalibration(Adafruit_ST7735 tft)
 
 }
 
-void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
+void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
 {
   tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
 
@@ -114,9 +114,11 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
   tft.setCursor(89, 95);
   tft.print("Cal    Adj");
 
+  
+  button[0].buttons(value, ASSIGMENT, 1, tft, CLEAR_SCR);
+  
 
-
-  }
+}
   
 
 

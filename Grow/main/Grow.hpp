@@ -28,16 +28,24 @@
 # define CS_PIN 10
 
 //Controls Pins
-# define BT1 A0
-# define BT2 A5
-# define BT3 A4
-# define BT4 A3
+# define BT0 A0
+# define BT1 A5
+# define BT2 A4
+# define BT3 A3
 
 //Output Pins
 # define PUMP 2
 # define LIGHT 3
 # define FAN 4
 # define HUMIDIFIER 5
+
+//Operations
+
+# define INCREMENT 0
+# define DECREMENT 1
+# define ASSIGMENT 3
+# define CLEAR_SCR 0
+# define KEEP_SCR  1
 
 # include <DHT11.h>
 # include <Adafruit_GFX.h>    
@@ -74,17 +82,6 @@ class Sensors{
   
 };
 
-class Display{
-
-  public:
-      void initDisplay(Adafruit_ST7735 tft);
-      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
-      void displayAdjusts2(Adafruit_ST7735 tft);
-      void displayCalibration(Adafruit_ST7735 tft);
-      void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
-
-
-};
 
 class Controls{
 
@@ -97,7 +94,7 @@ class Controls{
 
   public:
     Controls(int buttonPin);
-    void buttons(int *value);
+    void buttons(int *value, int operation, int newValue, Adafruit_ST7735 tft, int screenState);
 
 };
 
@@ -110,6 +107,17 @@ class Actuators{
     void setHumidSwitch(int state);
 };
 
+class Display{
+
+  public:
+      void initDisplay(Adafruit_ST7735 tft);
+      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
+      void displayAdjusts2(Adafruit_ST7735 tft);
+      void displayCalibration(Adafruit_ST7735 tft);
+      void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int* value, Controls *buttons);
+
+
+};
 
 
 
