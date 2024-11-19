@@ -46,7 +46,7 @@ void Controls::buttons(int *value, int operation, int newValue, Adafruit_ST7735 
 }        
 
 
-     
+
       
 
 

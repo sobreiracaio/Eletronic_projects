@@ -44,6 +44,7 @@
 # define INCREMENT 0
 # define DECREMENT 1
 # define ASSIGMENT 3
+# define EXEC_FUNC 4
 # define CLEAR_SCR 0
 # define KEEP_SCR  1
 
@@ -65,20 +66,14 @@ class Sensors{
       int getTemp(void);
       int getHumid(void);
       int getSoil(void);
-      int getTargetTemp(void);
-      int getTargetHumid(void);
-      int getTargetSoil(void);
-
-      void setTargetTemp(int temp);
-      void setTargetHumid(int humid);
-      void setTargetSoil(int soil);
+     
+       int targetTemp;
+       int targetHumid;
+       int targetSoil;
   private:
        int _temperature;
        int _humidity;
        int _soil;
-       int _targetTemp;
-       int _targetHumid;
-       int _targetSoil;
   
 };
 
@@ -95,6 +90,7 @@ class Controls{
   public:
     Controls(int buttonPin);
     void buttons(int *value, int operation, int newValue, Adafruit_ST7735 tft, int screenState);
+    
 
 };
 
@@ -111,11 +107,13 @@ class Display{
 
   public:
       void initDisplay(Adafruit_ST7735 tft);
-      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor, int* value, Controls *buttons);
-      void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button);
-      void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button);
-      void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int* value, Controls *buttons);
-
+      void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
+      void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor);
+      void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor);
+      void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
+      void buttonsMenu(Adafruit_ST7735 tft, String options[4]);
+      void displayLine(Adafruit_ST7735 tft, int x, int y, int x1, int y1);
+  private:
 
 };
 

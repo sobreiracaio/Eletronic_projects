@@ -1,3 +1,6 @@
+#include "Adafruit_ST7735.h"
+#include "soc/touch_sensor_periph.h"
+#include "Adafruit_ST77xx.h"
 
 /* *************************************************************************************
 
@@ -30,48 +33,55 @@ void Display::initDisplay(Adafruit_ST7735 tft)
  
 }
 
-void Display::displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
+void Display::displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor)
 {
-    
+ 
+  int temp_temp = sensor->targetTemp;
+  int temp_humid = sensor->targetHumid;
+  int temp_soil = sensor->targetSoil;
+   
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(63, 26);
     tft.print("Adjust");
     tft.setCursor(0, 40);
     tft.print(" TEMP(C) HUMID(%) SOIL(%)");
     tft.setTextSize(2);
-    tft.setCursor(11, 57);
-    tft.print(sensor->getTargetTemp());
+    tft.setCursor(15, 57);
+    tft.print(temp_temp);
     tft.setCursor(66, 57);
-    tft.print(sensor->getTargetHumid());
+    tft.print(temp_humid);
     tft.setCursor(116, 57);
-    tft.print(sensor->getTargetSoil());
+    tft.print(temp_soil);
 
-    tft.setTextSize(1);
-    tft.setCursor(89, 85);
-    tft.print("<-      ->");
-    tft.setCursor(89, 95);
-    tft.print("Prev  Next");
-    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
+    
+    
 }
 
-void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
+void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor)
 {
+  
+ 
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(33, 26);
     tft.print("More Adjustments");
-    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
+   
+    
+    
 }
 
-void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
+void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor)
 {
+    
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(47, 26);
     tft.print("Calibration");
-    button[3].buttons(value, ASSIGMENT, 0, tft, CLEAR_SCR);
+    
+    
 }
 
-void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int *value, Controls *button)
+void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
 {
+  
   tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
 
   tft.setCursor(3, 26);
@@ -96,44 +106,75 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, int *value, Cont
   tft.drawRect(2, 40, 12, 52, ST77XX_WHITE);
   tft.fillRect(3, 90, 10, ((sensor->getTemp()/2)* (- 1)), ST77XX_GREEN);
   tft.fillRect(3, 41, 10, 50 -(sensor->getTemp()/2), ST77XX_BLACK);
-  tft.drawChar(16, map(sensor->getTargetTemp(), 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
+  tft.drawChar(16, map(sensor->targetTemp, 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
   
 
   tft.drawRect(27, 40, 12, 52, ST77XX_WHITE);
   tft.fillRect(28, 90, 10, ((sensor->getHumid()/2)* (- 1)), ST77XX_GREEN);
   tft.fillRect(28, 41, 10, 50 -(sensor->getHumid()/2), ST77XX_BLACK);
-  tft.drawChar(41, map(sensor->getTargetHumid(), 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
+  tft.drawChar(41, map(sensor->targetHumid, 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
 
   tft.drawRect(52, 40, 12, 52, ST77XX_WHITE);
   tft.fillRect(53, 90, 10, ((sensor->getSoil()/2)* (- 1)), ST77XX_GREEN);
   tft.fillRect(53, 41, 10, 50 -(sensor->getSoil()/2), ST77XX_BLACK);
-  tft.drawChar(66, map(sensor->getTargetSoil(), 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
+  tft.drawChar(66, map(sensor->targetHumid, 0, 99, 89, 39), '<',ST77XX_RED, ST77XX_BLACK, 1);
 
-  tft.setCursor(83, 26);
+  tft.drawLine(74, 0, 74, 120, 0x2108);
+
+  tft.setCursor(79, 26);
   tft.print("LIGHT-> ");
   tft.print("OFF");
-  tft.setCursor(83, 39);
-  
+
+  tft.setCursor(79, 39);
   tft.print("TIME-> ");
   tft.print("00:00");
-  tft.setCursor(89, 85);
-  tft.print("<-      ->");
-  tft.setCursor(89, 95);
-  tft.print("Cal    Adj");
-
-  
-  button[0].buttons(value, ASSIGMENT, 1, tft, CLEAR_SCR);
-  button[1].buttons(value, ASSIGMENT, 2, tft, CLEAR_SCR);
-  button[2].buttons(value, ASSIGMENT, 3, tft, CLEAR_SCR);
-  
   
   
 
+  
+}
+
+void Display::buttonsMenu(Adafruit_ST7735 tft, String options[4])
+{
+  tft.setTextSize(1);
+  int i = 0;
+  int j = 1;
+  while(j < 5)
+  {
+    tft.drawCircle(85 + i, 85, 6, ST77XX_WHITE);
+    tft.setCursor(83 + i, 82);
+    tft.setTextColor(ST77XX_WHITE);
+    tft.print(j);
+    i += 22;
+    j++;
+  }
+  
+  i = 0;
+  j = 0;
+  while (j < 4)
+  {
+    tft.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
+    if(options[j][1] == 'v')
+      tft.setTextColor(ST77XX_GREEN, ST77XX_BLACK);
+    tft.setCursor(77 + i, 95);
+    tft.print(options[j]);
+    i += 22;
+    j++;
+  }
 }
   
 
+void Display::displayLine(Adafruit_ST7735 tft, int x, int y, int x1, int y1)
+{
+  
+  tft.setCursor(0, 0);
+  tft.drawLine(x, y, x1, y1, ST7735_RED);
+  tft.drawLine(x, y + 1, x1, y1 + 1, ST7735_RED);
+  
 
+  
 
+}
 
 
 
