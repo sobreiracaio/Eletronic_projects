@@ -17,7 +17,7 @@
 DHT11 dht11(DHT_PIN);
 Adafruit_ST7735 tft = Adafruit_ST7735(CS_PIN, DC_PIN, SDA_PIN, SCL_PIN, RES_PIN);
 
-int menu = 3;
+int menu = 0;
 
 
 
@@ -32,21 +32,29 @@ void setup() {
 
   
   
-  //Serial.begin(115200);
+  Serial.begin(115200);
+  Screen.initDisplay(tft);
 
   pinMode(DHT_PIN, INPUT);
-   pinMode(SOIL_PIN, INPUT);
+  pinMode(SOIL_PIN, INPUT);
+  pinMode(PUMP, OUTPUT);
+  digitalWrite(PUMP, HIGH);
 
-   pinMode(PUMP, OUTPUT);
-   pinMode(LIGHT, OUTPUT);
-   pinMode(FAN, OUTPUT);
+  pinMode(LIGHT, OUTPUT);
+  digitalWrite(LIGHT, HIGH);
+  
+  pinMode(FAN, OUTPUT);
+  digitalWrite(FAN, HIGH);
+  
+  pinMode(HUMIDIFIER, OUTPUT);
+  digitalWrite(HUMIDIFIER, HIGH);
+   
 
   pinMode(BT1, INPUT_PULLUP);
   pinMode(BT2, INPUT_PULLUP);
   pinMode(BT3, INPUT_PULLUP);
   pinMode(BT0, INPUT_PULLUP);
   
-  Screen.initDisplay(tft);
 
 
 

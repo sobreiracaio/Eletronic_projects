@@ -30,9 +30,11 @@ void Sensors::setTempHum(DHT11 dht11)
 
 void Sensors::setSoilMoisture(int pin)
 {
-  this->_soil = map(analogRead(pin),9, 1018, 0, 99);
+  
+  this->_soil = map(analogRead(pin),0, 4095, 0, 99);
   if (this->_soil < 0)
     this->_soil = 0;
+  Serial.println(this->_soil);
 }
 
 int Sensors::getHumid(void)

@@ -17,27 +17,27 @@
 # define GROW_HPP
 
 //Sensor Pins
-# define DHT_PIN A1
-# define SOIL_PIN A2
+# define DHT_PIN 32
+# define SOIL_PIN 13
 
 //Display Pins
-# define SCL_PIN 13
-# define SDA_PIN 11
-# define RES_PIN 8
-# define DC_PIN 9
-# define CS_PIN 10
+# define SCL_PIN 18
+# define SDA_PIN 21
+# define RES_PIN 4
+# define DC_PIN 17
+# define CS_PIN 5
 
 //Controls Pins
-# define BT0 A0
-# define BT1 A5
-# define BT2 A4
-# define BT3 A3
+# define BT0 25
+# define BT1 26
+# define BT2 27
+# define BT3 14
 
 //Output Pins
-# define PUMP 2
-# define LIGHT 3
-# define FAN 4
-# define HUMIDIFIER 5
+# define PUMP 33
+# define LIGHT 15
+# define FAN 2
+# define HUMIDIFIER 16
 
 //Operations
 
