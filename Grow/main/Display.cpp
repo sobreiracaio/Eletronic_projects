@@ -164,12 +164,12 @@ void Display::buttonsMenu(Adafruit_ST7735 tft, String options[4])
 }
   
 
-void Display::displayLine(Adafruit_ST7735 tft, int x, int y, int x1, int y1)
+void Display::displayLine(Adafruit_ST7735 tft, int x, int y, int x1, int color)
 {
   
   tft.setCursor(0, 0);
-  tft.drawLine(x, y, x1, y1, ST7735_RED);
-  tft.drawLine(x, y + 1, x1, y1 + 1, ST7735_RED);
+  tft.drawLine(x, y, x1, y, color);
+  tft.drawLine(x, y + 1, x1, y + 1, color);
   
 
   
