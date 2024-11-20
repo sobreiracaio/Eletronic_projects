@@ -64,9 +64,26 @@ void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor)
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(33, 26);
     tft.print("More Adjustments");
-   
-    
-    
+    tft.setCursor(10, 50);
+    tft.setTextSize(2);
+    tft.print("Light");
+    tft.setCursor(105, 50);
+    tft.print("Pump");
+        
+}
+
+void Display::lightMenu(Adafruit_ST7735 tft)
+{
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.setCursor(65, 26);
+    tft.print("Light");
+}
+
+void Display::pumpMenu(Adafruit_ST7735 tft)
+{
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.setCursor(68, 26);
+    tft.print("Pump");
 }
 
 void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor)
@@ -156,6 +173,8 @@ void Display::buttonsMenu(Adafruit_ST7735 tft, String options[4])
     tft.setTextColor(ST77XX_WHITE, ST77XX_BLACK);
     if(options[j][1] == 'v')
       tft.setTextColor(ST77XX_GREEN, ST77XX_BLACK);
+    if(options[j][1] == 'x')
+      tft.setTextColor(ST77XX_YELLOW, ST77XX_BLACK);
     tft.setCursor(77 + i, 95);
     tft.print(options[j]);
     i += 22;

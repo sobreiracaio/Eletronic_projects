@@ -26,7 +26,7 @@ Controls::Controls(int buttonPin)
 }
 
 void Controls::buttons(int *value, int operation, int newValue, Adafruit_ST7735 tft, int screenState, int hasLine, 
-                     void (*drawLine)(Adafruit_ST7735, int, int, int, int),int x, int y, int x1, int color)
+                            void (*drawLine)(Adafruit_ST7735, int, int, int, int),int x, int y, int x1, int color)
 {
       int reading = digitalRead(this->_buttonPin);
 

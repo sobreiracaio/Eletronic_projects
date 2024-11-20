@@ -48,6 +48,11 @@
 # define CLEAR_SCR 0
 # define KEEP_SCR  1
 
+//LIGHT
+
+# define DAY 0
+# define NIGHT 1
+
 # include <DHT11.h>
 # include <Adafruit_GFX.h>    
 # include <Adafruit_ST7735.h> 
@@ -95,6 +100,16 @@ class Controls{
 
 };
 
+class Light{
+
+  public:
+    void setDayTime(int hour, int min, int dayOrNight);
+  
+  private:
+    int _hour;
+    int _min;
+};   
+
 class Actuators{
 
   public:
@@ -110,6 +125,8 @@ class Display{
       void initDisplay(Adafruit_ST7735 tft);
       void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
       void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor);
+      void lightMenu(Adafruit_ST7735 tft);
+      void pumpMenu(Adafruit_ST7735 tft);
       void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
       void buttonsMenu(Adafruit_ST7735 tft, String options[4]);
