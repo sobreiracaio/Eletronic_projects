@@ -53,6 +53,12 @@
 # define DAY 0
 # define NIGHT 1
 
+//PUMP
+
+#define DAY 0
+#define WEEK 1
+
+
 # include <DHT11.h>
 # include <Adafruit_GFX.h>    
 # include <Adafruit_ST7735.h> 
@@ -71,11 +77,15 @@ class Sensors{
       int getTemp(void);
       int getHumid(void);
       int getSoil(void);
+
      
+       int soilMin;
+       int soilMax;
        int targetTemp;
        int targetHumid;
        int targetSoil;
   private:
+
        int _temperature;
        int _humidity;
        int _soil;
@@ -100,23 +110,24 @@ class Controls{
 
 };
 
-class Light{
-
-  public:
-    void setDayTime(int hour, int min, int dayOrNight);
-  
-  private:
-    int _hour;
-    int _min;
-};   
 
 class Actuators{
 
   public:
+    Actuators(int pin);
     void setPumpSwitch(int state);
     void setLightSwitch(int state);
     void setFanSwitch(int state);
     void setHumidSwitch(int state);
+    int dayTime;
+    int nightTime;
+    int pumpFreq;
+    int pumpPeriod;
+    int pumpTime;
+    int soilMoisture;
+
+  private:
+    int _pin;
 };
 
 class Display{
@@ -125,8 +136,9 @@ class Display{
       void initDisplay(Adafruit_ST7735 tft);
       void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
       void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor);
-      void lightMenu(Adafruit_ST7735 tft);
-      void pumpMenu(Adafruit_ST7735 tft);
+      void lightMenu(Adafruit_ST7735 tft, Actuators *light);
+      void pumpMenu(Adafruit_ST7735 tft, Actuators *pump);
+
       void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
       void buttonsMenu(Adafruit_ST7735 tft, String options[4]);

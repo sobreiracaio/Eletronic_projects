@@ -1,7 +1,3 @@
-#include "Adafruit_ST7735.h"
-#include "soc/touch_sensor_periph.h"
-#include "Adafruit_ST77xx.h"
-
 /* *************************************************************************************
 
 
@@ -72,26 +68,73 @@ void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor)
         
 }
 
-void Display::lightMenu(Adafruit_ST7735 tft)
+void Display::lightMenu(Adafruit_ST7735 tft, Actuators *light)
 {
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(65, 26);
     tft.print("Light");
+    tft.setTextSize(2);
+    tft.setCursor(35, 45);
+    tft.print(light->dayTime);
+    tft.setCursor(60, 52);
+    tft.setTextSize(1);
+    tft.print("H");
+    tft.setTextSize(2);
+    tft.setCursor(100, 45);
+    tft.print(light->nightTime);
+    tft.setCursor(125, 52);
+    tft.setTextSize(1);
+    tft.print("H");
+    tft.setCursor(40, 67);
+    tft.print("Day");
+    tft.setCursor(101, 67);
+    tft.print("Night");
 }
 
-void Display::pumpMenu(Adafruit_ST7735 tft)
+void Display::pumpMenu(Adafruit_ST7735 tft, Actuators *pump)
 {
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(68, 26);
     tft.print("Pump");
+    tft.setCursor(10, 38);
+    tft.print("Water ");
+    tft.setTextColor(ST77XX_YELLOW,ST77XX_BLACK);
+    tft.print(pump->pumpFreq);
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.print(" time(s) a ");
+    tft.setTextColor(ST77XX_YELLOW,ST77XX_BLACK);
+    if(pump->pumpPeriod == DAY)
+      tft.print("day ");
+    if(pump->pumpPeriod == WEEK)
+      tft.print("week");
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.setCursor(10, 51);
+    tft.print("Time: ");
+    tft.setTextColor(ST77XX_YELLOW,ST77XX_BLACK);
+    tft.print(pump->pumpTime);
+    tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
+    tft.print(" seconds ");
+    tft.setCursor(10, 64);
+    tft.print("If soil drops below: ");
+    tft.setTextColor(ST77XX_YELLOW,ST77XX_BLACK);
+    tft.print(pump->soilMoisture);
+    tft.print("% ");
 }
 
 void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor)
 {
     
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
-    tft.setCursor(47, 26);
+    tft.setCursor(47, 24);
     tft.print("Calibration");
+    tft.setCursor(10, 36);
+    tft.print("Remove sensor from soil");
+    tft.setCursor(10, 46);
+    tft.print("and press 'OK' then '>'");
+    tft.setCursor(10, 58);
+    tft.print("Insert sensor in soil");
+    tft.setCursor(10, 68);
+    tft.print("and press 'Set'");
     
     
 }
@@ -106,11 +149,14 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
   tft.drawCircle(17, 27, 1, ST77XX_WHITE);
   tft.setCursor(26, 26);
   tft.print(sensor->getHumid());
-  tft.print("%");
+  if(sensor->getHumid() < 100)
+    tft.print("% ");
  
   tft.setCursor(51, 26);
   tft.print(sensor->getSoil());
-  tft.print("%");
+  if(sensor->getSoil() < 100)
+    tft.print("% ");
+  
 
 
   tft.setCursor(5, 96);

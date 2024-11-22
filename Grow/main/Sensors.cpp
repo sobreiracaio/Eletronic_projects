@@ -1,4 +1,3 @@
-#include "Arduino.h"
 /* *************************************************************************************
 
 
@@ -20,7 +19,9 @@ Sensors::Sensors(void)
 {
   this->targetTemp = 25;
   this->targetHumid = 50;
-  this->targetSoil = 99;
+  this->targetSoil = 50;
+  this->soilMin = 0;
+  this->soilMax = 4095;
 }
 
 void Sensors::setTempHum(DHT11 dht11)
@@ -31,15 +32,13 @@ void Sensors::setTempHum(DHT11 dht11)
 void Sensors::setSoilMoisture(int pin)
 {
   
-  this->_soil = map(analogRead(pin),0, 4095, 0, 99);
+  this->_soil = map(analogRead(pin),this->soilMin, this->soilMax, 0, 100);
   if (this->_soil < 0)
     this->_soil = 0;
 }
 
 int Sensors::getHumid(void)
 {
-  if(this->_humidity == 100)
-    this->_humidity = 99;
   return (this->_humidity);
 }
 
