@@ -1,3 +1,5 @@
+#include "Adafruit_ST77xx.h"
+#include "Adafruit_ST7735.h"
 /* *************************************************************************************
 
 
@@ -68,20 +70,30 @@ void Display::displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor)
         
 }
 
-void Display::lightMenu(Adafruit_ST7735 tft, Actuators *light)
+void Display::lightMenu(Adafruit_ST7735 tft, Light *light)
 {
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(65, 26);
     tft.print("Light");
     tft.setTextSize(2);
     tft.setCursor(35, 45);
-    tft.print(light->dayTime);
+
+    if(light->dayTime < 10)
+      tft.printf(" %d",light->dayTime);
+    else
+      tft.print(light->dayTime);
+    
     tft.setCursor(60, 52);
     tft.setTextSize(1);
     tft.print("H");
     tft.setTextSize(2);
     tft.setCursor(100, 45);
-    tft.print(light->nightTime);
+
+    if(light->nightTime < 10)
+      tft.printf(" %d",light->nightTime);
+    else
+      tft.print(light->nightTime);
+
     tft.setCursor(125, 52);
     tft.setTextSize(1);
     tft.print("H");
@@ -91,7 +103,7 @@ void Display::lightMenu(Adafruit_ST7735 tft, Actuators *light)
     tft.print("Night");
 }
 
-void Display::pumpMenu(Adafruit_ST7735 tft, Actuators *pump)
+void Display::pumpMenu(Adafruit_ST7735 tft, Pump *pump)
 {
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(68, 26);
@@ -186,8 +198,17 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
 
   tft.setCursor(79, 26);
   tft.print("LIGHT-> ");
-  tft.print("OFF");
-
+  if(digitalRead(LIGHT) == HIGH)
+  {
+    tft.setTextColor(ST7735_GREEN,ST77XX_BLACK);
+    tft.print("ON ");
+  }
+  else
+  {
+    tft.setTextColor(ST7735_RED,ST77XX_BLACK);
+    tft.print("OFF");
+  }
+  tft.setTextColor(ST7735_WHITE,ST77XX_BLACK);
   tft.setCursor(79, 39);
   tft.print("TIME-> ");
   tft.print("00:00");

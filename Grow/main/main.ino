@@ -18,14 +18,16 @@ DHT11 dht11(DHT_PIN);
 Adafruit_ST7735 tft = Adafruit_ST7735(CS_PIN, DC_PIN, SDA_PIN, SCL_PIN, RES_PIN);
 
 int menu = 0;
-Actuators Light(LIGHT);
-Actuators Pump(PUMP);
+int startFlag = 0;
 Sensors Sensor;
 Display Screen;
+Light Light(LIGHT);
+Pump Pump(PUMP, &Sensor);
 Controls Button[4] = {Controls(BT0), Controls(BT1), Controls(BT2), Controls(BT3)};
 
 String options[4] = {"Set", "   ", "   ", " <"};
-String options1[4] = {"Set", "Adj", "Cal", "  "};
+String options1[4] = {"Set", "Adj", "Cal", "Go"};
+String options1_1[4] = {"Set", "Adj", "Cal", "ST"};
 String options2[4]= {" > ", " - ", " + ", " v"};
 String options3[4]= {"   ", " - ", " + ", " v"};
 String options4[4]= {"   ", " > ", " x ", " v"};
@@ -39,6 +41,7 @@ void setup()
 {
   
   Serial.begin(115200);
+  tft.setSPISpeed(80000000);
   Screen.initDisplay(tft);
 
   pinMode(DHT_PIN, INPUT);
@@ -69,10 +72,21 @@ void loop()
   {
       case 0:
         Screen.mainDisplay(tft, &Sensor);
-        Screen.buttonsMenu(tft, options1);
+        
         Button[0].buttons(&menu, ASSIGMENT, 1, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
         Button[1].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
         Button[2].buttons(&menu, ASSIGMENT, 16, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
+        if(startFlag == 0)
+        {
+          Button[3].buttons(&startFlag, ASSIGMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0);
+          Screen.buttonsMenu(tft, options1);
+        }
+        else
+        {
+          Button[3].buttons(&startFlag, ASSIGMENT, 0, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0);
+          Screen.buttonsMenu(tft, options1_1);
+        }
+
         break;
       case 1:
         Screen.displayAdjusts(tft, &Sensor);
@@ -201,8 +215,8 @@ void loop()
         Screen.pumpMenu(tft, &Pump);
         Screen.buttonsMenu(tft, options3);
         Screen.displayLine(tft, 133, 73 , 153, ST7735_RED);
-        Button[1].buttons(&Pump.soilMoisture, DECREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
-        Button[2].buttons(&Pump.soilMoisture, INCREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[1].buttons(&Sensor.targetSoil, DECREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[2].buttons(&Sensor.targetSoil, INCREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
         Button[3].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0); 
         break;
       
@@ -227,8 +241,9 @@ void loop()
         menu = 0;
   }
   
-  Serial.println(Sensor.soilMin);
-  Serial.println(Sensor.soilMax);
+  Serial.println(startFlag);
+  
+  Light.setLightSwitch(startFlag);
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);
   

@@ -66,7 +66,7 @@
 # include <SPI.h>
 
 
-
+ 
 
 class Sensors{
 
@@ -111,16 +111,28 @@ class Controls{
 };
 
 
-class Actuators{
+class Light{
 
   public:
-    Actuators(int pin);
-    void setPumpSwitch(int state);
-    void setLightSwitch(int state);
-    void setFanSwitch(int state);
-    void setHumidSwitch(int state);
+    Light(int pin);
+   
+    void setLightSwitch(int startFlag);
+  
     int dayTime;
     int nightTime;
+    int lightLastState;
+
+  private:
+    int _pin;
+};
+
+class Pump{
+
+  public:
+    Pump(int pin, Sensor *sensor);
+    
+    void setPumpSwitch(int startFlag, Sensor *sensor);
+   
     int pumpFreq;
     int pumpPeriod;
     int pumpTime;
@@ -136,8 +148,8 @@ class Display{
       void initDisplay(Adafruit_ST7735 tft);
       void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
       void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor);
-      void lightMenu(Adafruit_ST7735 tft, Actuators *light);
-      void pumpMenu(Adafruit_ST7735 tft, Actuators *pump);
+      void lightMenu(Adafruit_ST7735 tft, Light *light);
+      void pumpMenu(Adafruit_ST7735 tft, Pump *pump);
 
       void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);
