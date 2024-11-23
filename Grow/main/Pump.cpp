@@ -54,11 +54,11 @@ void Pump::setPumpSwitch(int startFlag, Sensors *sensor)
           this->pumpLastState = millis();
       }
       
-      if(sensor->getSoil() < sensor->targetSoil && (millis() - this->pumpLastState) > (ONE_HOUR))
+      if(sensor->getSoil() < sensor->targetSoil && (millis() - this->pumpLastState) > (ONE_HOUR / 12))
         digitalWrite(PUMP, HIGH);
       else
         digitalWrite(PUMP, LOW);
-      if ((millis() - this->pumpLastState) >= (ONE_HOUR) + (this->pumpTime * ONE_SECOND))
+      if ((millis() - this->pumpLastState) >= (ONE_HOUR / 12) + (this->pumpTime * ONE_SECOND))
       {
         digitalWrite(PUMP, LOW); 
         this->pumpLastState = millis();

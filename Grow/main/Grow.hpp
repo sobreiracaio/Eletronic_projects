@@ -150,6 +150,12 @@ class Pump{
     int _pin;
 };
 
+class FanAndHumidifier {
+  public:
+     void setSwitch(int startFlag, Sensors *sensor);
+};
+
+
 class Display{
 
   public:

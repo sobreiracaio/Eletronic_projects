@@ -23,6 +23,7 @@ Sensors Sensor;
 Display Screen;
 Light Light(LIGHT);
 Pump Pump(PUMP, &Sensor);
+FanAndHumidifier FanAndHumidifier;
 Controls Button[4] = {Controls(BT0), Controls(BT1), Controls(BT2), Controls(BT3)};
 
 String options[4] = {"Set", "   ", "   ", " <"};
@@ -247,6 +248,7 @@ void loop()
   Pump.setPumpSwitch(startFlag, &Sensor);
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);
+  FanAndHumidifier.setSwitch(startFlag, &Sensor);
   
   
   
