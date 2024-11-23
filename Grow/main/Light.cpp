@@ -38,11 +38,11 @@ void Light::setLightSwitch(int startFlag)
 
   if(startFlag == 1)
   {
-    if ((millis() - this->lightLastState) < (this->dayTime * 3600000))
+    if ((millis() - this->lightLastState) < (this->dayTime * ONE_HOUR))
       digitalWrite(LIGHT, HIGH);
     else
       digitalWrite(LIGHT, LOW);
-    if ((millis() - this->lightLastState) >= ((this->dayTime + this->nightTime) * 3600000))
+    if ((millis() - this->lightLastState) >= ((this->dayTime + this->nightTime) * ONE_HOUR))
       this->lightLastState = millis();
   }
   else 

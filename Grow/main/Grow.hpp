@@ -55,8 +55,15 @@
 
 //PUMP
 
-#define DAY 0
-#define WEEK 1
+# define DAY 0
+# define WEEK 1
+
+//TIME
+
+# define ONE_SECOND 1000
+# define ONE_HOUR 3600000
+# define ONE_DAY 86400000
+# define ONE_WEEK 604800000
 
 
 # include <DHT11.h>
@@ -120,7 +127,7 @@ class Light{
   
     int dayTime;
     int nightTime;
-    int lightLastState;
+    unsigned long lightLastState;
 
   private:
     int _pin;
@@ -129,15 +136,16 @@ class Light{
 class Pump{
 
   public:
-    Pump(int pin, Sensor *sensor);
+    Pump(int pin, Sensors *sensor);
     
-    void setPumpSwitch(int startFlag, Sensor *sensor);
+    void setPumpSwitch(int startFlag, Sensors *sensor);
    
     int pumpFreq;
     int pumpPeriod;
     int pumpTime;
     int soilMoisture;
-
+    unsigned long pumpLastState;
+    unsigned long pumpLastWateringState;
   private:
     int _pin;
 };
@@ -149,7 +157,7 @@ class Display{
       void displayAdjusts(Adafruit_ST7735 tft, Sensors *sensor);
       void displayAdjusts2(Adafruit_ST7735 tft, Sensors *sensor);
       void lightMenu(Adafruit_ST7735 tft, Light *light);
-      void pumpMenu(Adafruit_ST7735 tft, Pump *pump);
+      void pumpMenu(Adafruit_ST7735 tft, Pump *pump, Sensors *sensor);
 
       void displayCalibration(Adafruit_ST7735 tft, Sensors *sensor);
       void mainDisplay(Adafruit_ST7735 tft, Sensors *sensor);

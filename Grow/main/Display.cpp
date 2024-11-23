@@ -103,7 +103,7 @@ void Display::lightMenu(Adafruit_ST7735 tft, Light *light)
     tft.print("Night");
 }
 
-void Display::pumpMenu(Adafruit_ST7735 tft, Pump *pump)
+void Display::pumpMenu(Adafruit_ST7735 tft, Pump *pump, Sensors *sensor)
 {
     tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
     tft.setCursor(68, 26);
@@ -129,7 +129,7 @@ void Display::pumpMenu(Adafruit_ST7735 tft, Pump *pump)
     tft.setCursor(10, 64);
     tft.print("If soil drops below: ");
     tft.setTextColor(ST77XX_YELLOW,ST77XX_BLACK);
-    tft.print(pump->soilMoisture);
+    tft.print(sensor->targetSoil);
     tft.print("% ");
 }
 

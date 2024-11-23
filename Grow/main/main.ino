@@ -175,14 +175,14 @@ void loop()
         break;
 
       case 11:
-        Screen.pumpMenu(tft, &Pump);
+        Screen.pumpMenu(tft, &Pump, &Sensor);
         Screen.buttonsMenu(tft, options);
         Button[0].buttons(&menu, ASSIGMENT, 12, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
         Button[3].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
         break;
 
       case 12:
-        Screen.pumpMenu(tft, &Pump);
+        Screen.pumpMenu(tft, &Pump, &Sensor);
         Screen.buttonsMenu(tft, options2);
         Screen.displayLine(tft, 43, 47 , 53, ST7735_RED);
         Button[0].buttons(&menu, ASSIGMENT, 13, tft, KEEP_SCR, 1, Display::displayLine , 43, 47, 53, ST7735_BLACK);
@@ -192,17 +192,17 @@ void loop()
         break;
       
       case 13:
-        Screen.pumpMenu(tft, &Pump);
+        Screen.pumpMenu(tft, &Pump, &Sensor);
         Screen.buttonsMenu(tft, options2);
         Screen.displayLine(tft, 116, 47 , 136, ST7735_RED);
         Button[0].buttons(&menu, ASSIGMENT, 14, tft, KEEP_SCR, 1, Display::displayLine , 116, 47, 136, ST7735_BLACK);
-        Button[1].buttons(&Pump.pumpPeriod, DECREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
-        Button[2].buttons(&Pump.pumpPeriod, INCREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[1].buttons(&Pump.pumpPeriod, ASSIGMENT, DAY, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[2].buttons(&Pump.pumpPeriod, ASSIGMENT, WEEK, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
         Button[3].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0); 
         break;
 
       case 14:
-        Screen.pumpMenu(tft, &Pump);
+        Screen.pumpMenu(tft, &Pump, &Sensor);
         Screen.buttonsMenu(tft, options2);
         Screen.displayLine(tft, 43, 60 , 53, ST7735_RED);
         Button[0].buttons(&menu, ASSIGMENT, 15, tft, KEEP_SCR, 1, Display::displayLine , 43, 60 , 53, ST7735_BLACK);
@@ -212,11 +212,11 @@ void loop()
         break;
       
       case 15:
-        Screen.pumpMenu(tft, &Pump);
+        Screen.pumpMenu(tft, &Pump, &Sensor);
         Screen.buttonsMenu(tft, options3);
         Screen.displayLine(tft, 133, 73 , 153, ST7735_RED);
-        Button[1].buttons(&Sensor.targetSoil, DECREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
-        Button[2].buttons(&Sensor.targetSoil, INCREMENT, 1, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[1].buttons(&Sensor.targetSoil, DECREMENT, 5, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
+        Button[2].buttons(&Sensor.targetSoil, INCREMENT, 5, tft, KEEP_SCR, 0, NULL ,0, 0, 0, 0); 
         Button[3].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0); 
         break;
       
@@ -241,9 +241,10 @@ void loop()
         menu = 0;
   }
   
-  Serial.println(startFlag);
+  Serial.println(digitalRead(PUMP));
   
   Light.setLightSwitch(startFlag);
+  Pump.setPumpSwitch(startFlag, &Sensor);
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);
   
