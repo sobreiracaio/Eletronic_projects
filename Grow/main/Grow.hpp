@@ -112,7 +112,7 @@ class Controls{
 
     public:
         Controls(int buttonPin);
-        void buttons(int *value, int operation, int newValue, Adafruit_ST7735   *tft  , int screenState, int hasLine, 
+        void buttons(int *value, int operation, int newValue, Adafruit_ST7735 *tft, int screenState, int hasLine, 
                                          void (*drawLine)(Adafruit_ST7735*, int, int, int, int),int x, int y, int x1, int color);
         
 
@@ -171,16 +171,16 @@ class Time{
 class Display{
 
     public:
-            void initDisplay(Adafruit_ST7735   *tft  );
-            void displayAdjusts(Adafruit_ST7735   *tft  , Sensors *sensor);
-            void displayAdjusts2(Adafruit_ST7735   *tft  , Sensors *sensor);
-            void lightMenu(Adafruit_ST7735   *tft  , Light *light);
-            void pumpMenu(Adafruit_ST7735   *tft  , Pump *pump, Sensors *sensor);
+            void initDisplay(Adafruit_ST7735 *tft);
+            void displayAdjusts(Adafruit_ST7735 *tft, Sensors *sensor);
+            void displayAdjusts2(Adafruit_ST7735 *tft, Sensors *sensor);
+            void lightMenu(Adafruit_ST7735 *tft, Light *light);
+            void pumpMenu(Adafruit_ST7735 *tft, Pump *pump, Sensors *sensor);
 
-            void displayCalibration(Adafruit_ST7735   *tft  , Sensors *sensor);
-            void mainDisplay(Adafruit_ST7735   *tft  , Sensors *sensor, Time *time);
-            void buttonsMenu(Adafruit_ST7735   *tft  , String options[4]);
-            static void displayLine(Adafruit_ST7735   *tft  , int x, int y, int x1, int color);
+            void displayCalibration(Adafruit_ST7735 *tft, Sensors *sensor);
+            void mainDisplay(Adafruit_ST7735 *tft, Sensors *sensor, Time *time);
+            void buttonsMenu(Adafruit_ST7735 *tft, String options[4]);
+            static void displayLine(Adafruit_ST7735 *tft, int x, int y, int x1, int color);
     private:
 
 };

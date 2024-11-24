@@ -212,7 +212,7 @@ void Display::mainDisplay(Adafruit_ST7735 *tft, Sensors *sensor, Time *time)
   if(time->decreasingHourDay > 0)
     tft->printf("%d:%s%d", time->decreasingHourDay,(time->minutes < 10) ? "0": "", time->minutes);
   else if(time->decreasingHourNight > 0)
-    tft->printf("%d:%s%d", time->decreasingHourDay,(time->minutes < 10) ? "0": "", time->minutes);
+    tft->printf("%d:%s%d", time->decreasingHourNight,(time->minutes < 10) ? "0": "", time->minutes);
   
   
 }
