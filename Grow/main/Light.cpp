@@ -17,7 +17,7 @@
 
 Light::Light(int pin)
 {
-  this->dayTime = 12;
+  this->dayTime = 1;
   this->nightTime = 12;
   this->lightLastState = 0;
   this->_pin = pin;

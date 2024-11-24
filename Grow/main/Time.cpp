@@ -53,7 +53,7 @@ void Time::getTime(int startFlag, Light *light)
                 this->debounceMin = millis();
             }
         }
-        if (this->decreasingHourDay <= 0 && this->decreasingHourNight <= 0)
+        if (this->decreasingHourDay < 0 && this->decreasingHourNight < 0)
         {
             this->decreasingHourDay = light->dayTime;
             this->decreasingHourNight = light->nightTime;
