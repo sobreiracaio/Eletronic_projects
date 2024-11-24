@@ -21,12 +21,12 @@ void FanAndHumidifier::setSwitch(int startFlag, Sensors *sensor)
   {
     if(sensor->getTemp() > sensor->targetTemp + 1)
       digitalWrite(FAN, HIGH);
-    else
+    else if(sensor->getTemp() > sensor->targetTemp - 1)
       digitalWrite(FAN, LOW);
 
     if(sensor->getHumid() > sensor->targetHumid + 1)
       digitalWrite(HUMIDIFIER, HIGH);
-    else
+    else if (sensor->getHumid() > sensor->targetHumid - 1)
       digitalWrite(HUMIDIFIER, LOW);
   }
   else

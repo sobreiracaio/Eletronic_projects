@@ -24,6 +24,7 @@ Display Screen;
 Light Light(LIGHT);
 Pump Pump(PUMP, &Sensor);
 FanAndHumidifier FanAndHumidifier;
+Time Time(&Light);
 Controls Button[4] = {Controls(BT0), Controls(BT1), Controls(BT2), Controls(BT3)};
 
 String options[4] = {"Set", "   ", "   ", " <"};
@@ -72,7 +73,7 @@ void loop()
   switch (menu) 
   {
       case 0:
-        Screen.mainDisplay(tft, &Sensor);
+        Screen.mainDisplay(tft, &Sensor, &Time);
         
         Button[0].buttons(&menu, ASSIGMENT, 1, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
         Button[1].buttons(&menu, ASSIGMENT, 5, tft, CLEAR_SCR, 0, NULL ,0, 0, 0, 0);
@@ -242,14 +243,14 @@ void loop()
         menu = 0;
   }
   
-  Serial.println(digitalRead(PUMP));
+  Serial.println(Time.minutes);
   
   Light.setLightSwitch(startFlag);
   Pump.setPumpSwitch(startFlag, &Sensor);
   Sensor.setTempHum(dht11);
   Sensor.setSoilMoisture(SOIL_PIN);
   FanAndHumidifier.setSwitch(startFlag, &Sensor);
-  
+  Time.getTime(startFlag, &Light);
   
   
 

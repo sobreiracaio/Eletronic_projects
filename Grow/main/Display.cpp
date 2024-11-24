@@ -149,7 +149,7 @@ void Display::displayCalibration(Adafruit_ST7735 tft, Sensors *sensor)
     
 }
 
-void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
+void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor, Time *time)
 {
   
   tft.setTextColor(ST77XX_WHITE,ST77XX_BLACK);
@@ -209,9 +209,12 @@ void Display::mainDisplay(Adafruit_ST7735 tft, Sensors *sensor)
   tft.setTextColor(ST7735_WHITE,ST77XX_BLACK);
   tft.setCursor(79, 39);
   tft.print("TIME-> ");
-  tft.print("00:00");
-  
-  
+  if(time->decreasingHourDay > 0)
+    tft.printf("%d:%d", time->decreasingHourDay, time->minutes);
+  else if(time->decreasingHourNight > 0)
+    tft.printf("%d:%d", time->decreasingHourDay, time->minutes);
+  if(time->minutes == 0)
+    tft.print("0");
 
   
 }
