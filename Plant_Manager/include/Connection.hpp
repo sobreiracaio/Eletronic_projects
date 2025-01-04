@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   WiFi.hpp                                           :+:      :+:    :+:   */
+/*   Connection.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:08:31 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/01/04 16:58:12 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:36:30 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "WiFiManager.h"
-#include <string>
+#include "Preferences.h"
+
 
 #define CONNECTED 1
 #define NOT_CONNECTED 0
 
-class WifiConnection {
+WiFiManager wifi;
+Preferences nonVolatileData;
+
+class Connection{
     private:
-        const std::string _user;
-        const std::string _pass;
+        const char *_user;
+        const char *_pass;
         bool _status;
-        void _reconnect(void);
+        bool _isFirstConnection;
+        
     public:
-        WifiConnection(std::string const &user, std::string const &pass, bool status);
+        Connection();
+        void wifiPortal(void);
         bool getStatus(void);
         void setStatus(bool status);
-        void setUser(std::string const user);
-        void setPass(std::string const pass);
-        bool connect(void);
+        bool connect(char *user,char *pass);
 };
+
+    
