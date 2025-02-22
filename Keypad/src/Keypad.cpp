@@ -6,23 +6,23 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:28:55 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/02/21 22:56:56 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/02/22 01:16:13 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Keypad.hpp"
 
-Keypad::Keypad(std::list<std::string> commandTable[BUTTON_NBR], std::list<int> commandTypes[BUTTON_NBR])
+Keypad::Keypad(std::deque<std::string> (&commandTable)[BUTTON_NBR], std::deque<int> (&typesTable)[BUTTON_NBR]): _commandMatrix(commandTable), _commandTypes(typesTable)
 {
-    for(int i = 0; i <= BUTTON_NBR; i++)
+    for(int i = 0; i < BUTTON_NBR; i++)
     {
         this->_commandMatrix[i] = commandTable[i];
     }
-    for(int i = 0; i <= BUTTON_NBR; i++)
+    for(int i = 0; i < BUTTON_NBR; i++)
     {
-        this->_commandTypes[i] = commandTypes[i];
+        this->_commandTypes[i] = typesTable[i];
     }
-    this->begin();
+    
 }
 
 void Keypad::_execByType(std::string value, int type)
@@ -31,10 +31,11 @@ void Keypad::_execByType(std::string value, int type)
     switch (type)
     {
         case KEY:
-            this->write(*str);
+            //this->write(*str);
+            Serial.printf("Letter is: %c", *str);
             break;
         case TEXT:
-            this->print(str);
+        Serial.printf("Letter is: %s", str);
             break;
         case MACRO:
             break;
@@ -44,16 +45,19 @@ void Keypad::_execByType(std::string value, int type)
 }
 
 
-void Keypad::execute(int button, int cmdType)
+
+
+void Keypad::execute(int button)
 {
     if(button == -1)
         return;
     
-    for (int i = 0; i <= BUTTON_NBR; i++ )
+    for (int i = 0; i < BUTTON_NBR; i++ )
     {
+        
         if(i == button)
         {
-            this->_execByType(this->_commandMatrix[i], this->_commandTypes[i]);
+            this->_execByType(this->_commandMatrix->at(i - 1), this->_commandTypes->at(i - 1));
         }
     }
     
