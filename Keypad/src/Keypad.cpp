@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:28:55 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/02/22 01:16:13 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/02/23 00:38:19 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,16 @@ void Keypad::execute(int button)
         }
     }
     
+}
+
+void Keypad::setCmdMatrix(std::deque<std::string> (commandMatrix)[BUTTON_NBR], std::deque<int> (commandTypes)[BUTTON_NBR])
+{
+    for(int i = 0; i < BUTTON_NBR; i++)
+    {
+        this->_commandMatrix[i] = commandMatrix[i];
+    }
+    for(int i = 0; i < BUTTON_NBR; i++)
+    {
+        this->_commandTypes[i] = commandTypes[i];
+    }
 }

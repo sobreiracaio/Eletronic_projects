@@ -1,6 +1,6 @@
 
 #include "Keypad.hpp"
-
+#include "Parser.hpp"
 
  #include <SPIFFS.h>
  #include <FS.h>
@@ -19,10 +19,11 @@
 const int _pinCol[5] = {COL0, COL1, COL2, COL3, COL4};
 const int _pinRow[3] = {ROW0, ROW1, ROW2};
 
-String rawData;
+
+
 
 //std::deque<std::string> commandTable[BUTTON_NBR];
-//std::deque<int> typesTable[BUTTON_NBR];
+std::deque<int> typesTable;
 
 
 
@@ -55,7 +56,7 @@ int buttonNumber()
     return (buttonNbr);
   return (-1);
 }
-String initSPIFFS()
+String getSPIFFS()
 {
   File file;
   String contents;
@@ -91,17 +92,22 @@ String initSPIFFS()
   return (contents);
 }
  
+String rawData = getSPIFFS();
 
 void setup() 
 {
   
   Serial.begin(115200);
   generateMatrix();
-  rawData = initSPIFFS();
   Serial.println(rawData);
-
+  Parser parser(rawData);
   
+   typesTable = parser.parseType();
   
+  for (int i = 0; i < BUTTON_NBR; i++)
+  {
+    Serial.println(typesTable[i]);
+  }
   
 }
  
@@ -110,7 +116,7 @@ void setup()
 
 void loop() {
 
-  // Serial.println(buttonNumber());
+//Serial.println(buttonNumber());
   // int button = buttonNumber();
   // //keypad.execute(button);
   // delay(50);

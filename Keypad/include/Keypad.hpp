@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:58:42 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/02/22 14:51:33 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/02/23 00:37:35 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ class Keypad: public BleKeyboard{
     
     public:
         Keypad(std::deque<std::string> (&commandTable)[BUTTON_NBR], std::deque<int> (&typesTable)[BUTTON_NBR]);
-        
+        void setCmdMatrix(std::deque<std::string> (commandMatrix)[BUTTON_NBR], std::deque<int> (commandTypes)[BUTTON_NBR]);
         
         void execute(int button);
 
