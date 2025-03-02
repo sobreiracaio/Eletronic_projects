@@ -20,9 +20,9 @@ const int _pinRow[3] = {ROW0, ROW1, ROW2};
 std::deque<std::string> commandTable;
 std::deque<std::string> typesTable;
 
+BleKeyboard bt("ESP32 Keyboard", "ESP32", 100);
 Keypad keypad;
 int button;
-
 String rawData;
 
 void generateMatrix()
@@ -87,22 +87,18 @@ String getSPIFFS()
   return (contents);
 }
  
-
 void setup() 
 {
   Serial.begin(115200);
   rawData = getSPIFFS();
   generateMatrix();
   Parser parser(rawData);
-    
   typesTable = parser.readFromFile(TYPE);
   commandTable = parser.readFromFile(VALUE); 
   
   keypad.setCmdMatrix(commandTable, typesTable);
+  
 }
-
-
-
 
 void loop() 
 {

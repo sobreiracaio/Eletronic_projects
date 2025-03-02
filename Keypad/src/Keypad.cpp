@@ -6,11 +6,14 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:28:55 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/03/02 01:22:31 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/03/02 01:52:48 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Keypad.hpp"
+
+
+
 
 Keypad::Keypad(){}
 
@@ -53,9 +56,6 @@ void Keypad::_execByType(std::string const &value, std::string const &types)
     }
 }
 
-
-
-
 void Keypad::execute(int button)
 {
     if(button == -1)
@@ -75,3 +75,4 @@ void Keypad::setCmdMatrix(std::deque<std::string> commandMatrix, std::deque<std:
         this->_commandTypes.push_back(commandTypes[i]);
     }
 }
+

@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:58:42 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/03/02 01:07:07 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/03/02 01:52:40 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ class Keypad{
     public:
         Keypad();
         void setCmdMatrix(std::deque<std::string> (commandMatrix), std::deque<std::string> (commandTypes));
-        
         void execute(int button);
-
-        
-        
-        
-    
+   
 };
