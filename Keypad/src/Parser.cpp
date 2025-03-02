@@ -5,59 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/22 23:54:05 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/02/23 17:33:46 by crocha-s         ###   ########.fr       */
+/*   Created: 2025/03/01 15:10:33 by crocha-s          #+#    #+#             */
+/*   Updated: 2025/03/02 01:23:04 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Parser.hpp"
 
+Parser::Parser(String rawData):_rawData(rawData){}
 
 
-Parser::Parser(String rawData)
+static std::string trim(std::string const &data)
 {
-    this->_rawData = rawData;
+    int begin = data.find_first_not_of(" ");
+    int end = data.find_last_not_of(" ");
+    
+    if (begin == std::string::npos)
+        return "";
+    std::string subStr = data.substr(begin, end - begin + 1);
+    return (subStr);
 }
 
-int populate(std::string type)
-{
-    std::deque <std::string> types = {"KEY", "TEXT", "MACRO", "RUN"};
-    std::string temp = type;
-    std::deque<int> ret;
-    for(int i = 0; i < types.size(); i++)
-    {
-        if(temp.find(types[i]) != std::string::npos)
-            return (i);
-            
-    }
-    return (-1);
-}
 
-std::deque<int> Parser::parseType()
+std::deque<std::string> Parser::readFromFile(int dataType)
 {
-    
-    std::deque<std::string> rawLines;
-    std::deque<int> commandType;
-    std::string temp = std::string(this->_rawData.c_str());
-   
-    
-    for (int i = 0; i < temp.size(); i)
-    {
-        int indexBegin = temp.find_first_of("|",i) + 1;
-        int indexEnd = temp.find_first_of("|", indexBegin +1);
-        if (indexBegin == std::string::npos )
-            return (commandType);
-        
-        std::string subStr = temp.substr(indexBegin, indexEnd - indexBegin - 1);
-            
-        if(populate(subStr) >= 0)    
-            commandType.push_back(populate(subStr));
-                
+    std::stringstream raw (this->_rawData.c_str());
+    std::string line;
+    std::deque<std::string> deque;
          
-  
-            i = indexEnd;
+    while(std::getline(raw, line))
+    {
+        std::string discardBT;
+        std::string tmpCmdType;
+        std::string tmpCmdValue;
+        
+        std::getline(raw,discardBT, '|');
+        std::getline(raw,tmpCmdType, '>');
+        raw >> tmpCmdValue;
+        if(dataType == TYPE )
+        {
+            std::string trimmed = trim(tmpCmdType);
+            deque.push_back(trimmed);
+        }
+        else if (dataType == VALUE)
+        {
+            std::string trimmed = trim(tmpCmdValue);
+            deque.push_back(trimmed);
+        }
+         
     }
-       
-    
-    return(commandType);
+    return (deque);
 }

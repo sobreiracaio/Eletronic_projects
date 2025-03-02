@@ -1,17 +1,18 @@
-BT1  | KEY      | K
-BT2  | TEXT     | Text
-BT3  | MACRO    | K | K | K | K
-BT4  | RUN      | Path:/...
-BT5  | KEY      | K
-BT6  | TEXT     | Text
-BT7  | MACRO    | K | K | K | K
-BT8  | RUN      | Path:/...
-BT9  | KEY      | K
-BT10 | TEXT     | Text
-BT11 | MACRO    | K | K | K | K
-BT12 | KEY      | K
-BT13 | RUN      | Path:/...
-BT14 | RUN      | Path:/...
-BT15 | KEY      | K 
+
+BT1  | KEY      > K
+BT2  | TEXT     > Text
+BT3  | MACRO    > K,K,K,K
+BT4  | RUN      > Path:/...
+BT5  | KEY      > K
+BT6  | TEXT     > Text
+BT7  | MACRO    > K,K,K,K
+BT8  | RUN      > Path:/...
+BT9  | KEY      > K
+BT10 | TEXT     > Text
+BT11 | MACRO    > K,K,K,K
+BT12 | KEY      > K
+BT13 | RUN      > Path:/...
+BT14 | RUN      > Path:/...
+BT15 | KEY      > K 
 
 

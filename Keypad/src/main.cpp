@@ -14,18 +14,16 @@
 #define ROW1 22
 #define ROW2 23
 
-
-
 const int _pinCol[5] = {COL0, COL1, COL2, COL3, COL4};
 const int _pinRow[3] = {ROW0, ROW1, ROW2};
 
+std::deque<std::string> commandTable;
+std::deque<std::string> typesTable;
 
+Keypad keypad;
+int button;
 
-
-//std::deque<std::string> commandTable[BUTTON_NBR];
-std::deque<int> typesTable;
-
-
+String rawData;
 
 void generateMatrix()
 {
@@ -56,6 +54,7 @@ int buttonNumber()
     return (buttonNbr);
   return (-1);
 }
+
 String getSPIFFS()
 {
   File file;
@@ -68,7 +67,6 @@ String getSPIFFS()
   }
   Serial.println("SPIFFS montado com sucesso!");
 
-  
   if (!SPIFFS.exists("/conf.txt")) 
   {
     Serial.println("Arquivo /conf.txt não encontrado no SPIFFS!");
@@ -83,43 +81,38 @@ String getSPIFFS()
     return ("ERROR");
   }
   Serial.println("Arquivo Aberto");
-
   contents = file.readString();
-  
-  
   file.close();
 
   return (contents);
 }
  
-String rawData = getSPIFFS();
 
 void setup() 
 {
-  
   Serial.begin(115200);
+  rawData = getSPIFFS();
   generateMatrix();
-  Serial.println(rawData);
   Parser parser(rawData);
+    
+  typesTable = parser.readFromFile(TYPE);
+  commandTable = parser.readFromFile(VALUE); 
   
-   typesTable = parser.parseType();
-  
-  for (int i = 0; i < BUTTON_NBR; i++)
-  {
-    Serial.println(typesTable[i]);
-  }
-  
+  keypad.setCmdMatrix(commandTable, typesTable);
 }
- 
 
-//Keypad keypad(commandTable, typesTable);
 
-void loop() {
 
-//Serial.println(buttonNumber());
-  // int button = buttonNumber();
-  // //keypad.execute(button);
-  // delay(50);
-  // Serial.print("\033c");
+
+void loop() 
+{
+    button = buttonNumber();
+    if(button != -1)
+    {
+      
+      keypad.execute(button);
+    }
+    delay(50);
+    Serial.print("\033c");
 }
 

@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:58:42 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/02/23 00:37:35 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/03/02 01:07:07 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 #include <BleKeyboard.h>
 #include <deque>
 #include <string>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
 
 
 #define BUTTON_NBR 15
@@ -24,19 +28,24 @@
 #define TEXT 1
 #define MACRO 2
 #define RUN 3
+#define ERROR -1
 
-class Keypad: public BleKeyboard{
+#define TYPE 0
+#define VALUE 1
+
+class Keypad{
     private:
-        std::deque<std::string> (&_commandMatrix)[BUTTON_NBR];
-        std::deque<int> (&_commandTypes)[BUTTON_NBR];
-        void _execByType(std::string value, int type);
+        std::deque<std::string> _commandMatrix;
+        std::deque<std::string> _commandTypes;
+        void _execByType(std::string const &value, std::string const &type);
     
     public:
-        Keypad(std::deque<std::string> (&commandTable)[BUTTON_NBR], std::deque<int> (&typesTable)[BUTTON_NBR]);
-        void setCmdMatrix(std::deque<std::string> (commandMatrix)[BUTTON_NBR], std::deque<int> (commandTypes)[BUTTON_NBR]);
+        Keypad();
+        void setCmdMatrix(std::deque<std::string> (commandMatrix), std::deque<std::string> (commandTypes));
         
         void execute(int button);
 
+        
         
         
     
