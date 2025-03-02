@@ -6,7 +6,7 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 20:28:55 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/03/02 01:52:48 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:32:18 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 
 
-Keypad::Keypad(){}
+Keypad::Keypad(BleKeyboard *bt):_bt(bt){}
 
 static int returnType(std::string const &typeStr)
 {
@@ -39,9 +39,11 @@ void Keypad::_execByType(std::string const &value, std::string const &types)
     switch (type)
     {
         case KEY:
+            this->_bt->write(*str);
             Serial.printf("Letter is: %s", str);
             break;
         case TEXT:
+            this->_bt->print(str);
             Serial.printf("Text is: %s", str);
             break;
         case MACRO:

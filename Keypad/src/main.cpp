@@ -5,6 +5,8 @@
  #include <SPIFFS.h>
  #include <FS.h>
 
+
+
 #define COL0 4
 #define COL1 16
 #define COL2 17
@@ -21,7 +23,7 @@ std::deque<std::string> commandTable;
 std::deque<std::string> typesTable;
 
 BleKeyboard bt("ESP32 Keyboard", "ESP32", 100);
-Keypad keypad;
+Keypad keypad(&bt);
 int button;
 String rawData;
 
@@ -86,9 +88,15 @@ String getSPIFFS()
 
   return (contents);
 }
- 
+
+#include "soc/soc.h"
+#include "soc/rtc_cntl_reg.h"
+
+
+
 void setup() 
 {
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
   Serial.begin(115200);
   rawData = getSPIFFS();
   generateMatrix();
@@ -97,7 +105,7 @@ void setup()
   commandTable = parser.readFromFile(VALUE); 
   
   keypad.setCmdMatrix(commandTable, typesTable);
-  
+  bt.begin();
 }
 
 void loop() 
