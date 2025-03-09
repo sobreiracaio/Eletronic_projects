@@ -5,6 +5,9 @@
  #include <SPIFFS.h>
  #include <FS.h>
 
+ #include "soc/soc.h"         // to disable brownout
+#include "soc/rtc_cntl_reg.h" // to disable brownout
+
 
 
 #define COL0 4
@@ -15,6 +18,8 @@
 #define ROW0 21
 #define ROW1 22
 #define ROW2 23
+
+#define STATUS_LED 14
 
 const int _pinCol[5] = {COL0, COL1, COL2, COL3, COL4};
 const int _pinRow[3] = {ROW0, ROW1, ROW2};
@@ -62,6 +67,7 @@ String getSPIFFS()
   File file;
   String contents;
 
+  
   if (!SPIFFS.begin(true)) 
   {
     Serial.println("Erro ao montar o SPIFFS!");
@@ -89,15 +95,32 @@ String getSPIFFS()
   return (contents);
 }
 
-#include "soc/soc.h"
-#include "soc/rtc_cntl_reg.h"
+void fadeLed()
+{
+  static int brightness = 0;
+  static int fadeAmount = 5;
+  ledcWrite(0, brightness);
 
+  // change the brightness for next time through the loop:
+  brightness = brightness + fadeAmount;
+
+  // reverse the direction of the fading at the ends of the fade:
+  if (brightness <= 0 || brightness >= 255) {
+    fadeAmount = -fadeAmount;
+  }
+  // wait for 30 milliseconds to see the dimming effect
+  delay(30);
+  
+}
 
 
 void setup() 
 {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
+  ledcSetup(0, 5000, 8); // Configura PWM
+  ledcAttachPin(STATUS_LED, 0);         // Associa o canal ao pino do LED
   Serial.begin(115200);
+
   rawData = getSPIFFS();
   generateMatrix();
   Parser parser(rawData);
@@ -106,11 +129,19 @@ void setup()
   
   keypad.setCmdMatrix(commandTable, typesTable);
   bt.begin();
+  
+
 }
 
 void loop() 
 {
-    button = buttonNumber();
+  while (!bt.isConnected())
+  {
+     fadeLed();
+  }
+  if(bt.isConnected())
+  ledcWrite(0, 0);
+  button = buttonNumber();
     if(button != -1)
     {
       
