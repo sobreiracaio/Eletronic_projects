@@ -6,33 +6,13 @@
 /*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 19:58:42 by crocha-s          #+#    #+#             */
-/*   Updated: 2025/03/02 22:01:59 by crocha-s         ###   ########.fr       */
+/*   Updated: 2025/03/09 21:17:48 by crocha-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#include <Arduino.h>
-#include <BleKeyboard.h>
-#include <deque>
-#include <string>
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
-
-
-#define BUTTON_NBR 15
-
-#define KEY 0
-#define TEXT 1
-#define MACRO 2
-#define RUN 3
-#define ERROR -1
-
-#define TYPE 0
-#define VALUE 1
-
+#include "Conf.hpp"
 
 class Keypad{
     private:

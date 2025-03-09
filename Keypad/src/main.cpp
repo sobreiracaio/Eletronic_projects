@@ -1,25 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: crocha-s <crocha-s@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/09 21:20:29 by crocha-s          #+#    #+#             */
+/*   Updated: 2025/03/09 21:24:18 by crocha-s         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "Keypad.hpp"
 #include "Parser.hpp"
+#include "SPIFFS.hpp"
+#include "Conf.hpp"
 
- #include <SPIFFS.h>
- #include <FS.h>
-
- #include "soc/soc.h"         // to disable brownout
-#include "soc/rtc_cntl_reg.h" // to disable brownout
-
-
-
-#define COL0 4
-#define COL1 16
-#define COL2 17
-#define COL3 18
-#define COL4 19
-#define ROW0 21
-#define ROW1 22
-#define ROW2 23
-
-#define STATUS_LED 14
+ 
 
 const int _pinCol[5] = {COL0, COL1, COL2, COL3, COL4};
 const int _pinRow[3] = {ROW0, ROW1, ROW2};
@@ -62,38 +59,6 @@ int buttonNumber()
   return (-1);
 }
 
-String getSPIFFS()
-{
-  File file;
-  String contents;
-
-  
-  if (!SPIFFS.begin(true)) 
-  {
-    Serial.println("Erro ao montar o SPIFFS!");
-    return ("ERROR");
-  }
-  Serial.println("SPIFFS montado com sucesso!");
-
-  if (!SPIFFS.exists("/conf.txt")) 
-  {
-    Serial.println("Arquivo /conf.txt não encontrado no SPIFFS!");
-    return ("ERROR");
-  }
-  Serial.println("Arquivo existe!");
-
-  file = SPIFFS.open("/conf.txt");
-  if(!file)
-  {
-    Serial.println("Erro ao abrir o arquivo!");
-    return ("ERROR");
-  }
-  Serial.println("Arquivo Aberto");
-  contents = file.readString();
-  file.close();
-
-  return (contents);
-}
 
 void fadeLed()
 {
