@@ -1,0 +1,3 @@
+# ESP32 - BLE Keyboard
+
+The idea of this project is to construct a customizable keypad connected via Bluetooth to the computer. Its still on development, the plan is to connect the device to a software on the computer in which the user will be able to program keys, strings, macros and run commands, without recurring to shortcut assigments on programs executable files. This GUI will constructed soon using Qt Creator C++.
